@@ -1,0 +1,35 @@
+<% if (title) { %>
+  <h1><%= title %></h1>
+<% } else { res.redirect('/') } %>
+
+<% if (message) { %>
+  <p class="notice"><%= message %></p>
+<% } %>
+
+<% if(data.length > 0){ %>
+<ul id="inv-display">
+  <% 
+  // Note: Each element from the array must be in its own ejs block
+  data.forEach(vehicle => { %>
+    <li>
+      <a href="../../inv/detail/<%=vehicle.inv_id %>" 
+        title="View <%= vehicle.inv_make %> <%= vehicle.inv_model %> on CSE motors">
+        <img src="<%= vehicle.inv_thumbnail %>"/>
+      </a>
+      <div class="namePrice">
+        <hr>
+        <h2>
+          <a href="../../inv/detail/<%= vehicle.inv_id %>"
+            title="View <%= vehicle.inv_make %> <%= vehicle.inv_model %>">
+              <%= vehicle.inv_make %> <%= vehicle.inv_model %>
+            </a>
+        </h2>
+        <span>$<%= new Intl.NumberFormat('en-US').format(vehicle.inv_price) %></span>
+      </div>
+    </li>
+    
+  <% }); %>
+  </ul>
+  <% } else { %>
+    <p>Sorry, no matching vehicles could be found.</p>
+  <% } %>
