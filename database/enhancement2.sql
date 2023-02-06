@@ -7,3 +7,6 @@ WHERE client_id = 1;
 
 DELETE FROM client WHERE client_id = 1
 
+SELECT inv_make, inv_model FROM inventory i
+JOIN classification c ON i.classification_id = c.classification_id
+WHERE i.classification_id = 2
