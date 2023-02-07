@@ -17,4 +17,16 @@ invCont.buildByClassification = async function (req, res, next) {
   })
 }
 
+invCont.buildInvView = async function (req, res, next) {
+  const invId = req.params.invId;
+  let data = await invModel.getInventoryById(invId);
+  let nav = await utilities.getNav();
+  res.render("./inventory/inventory-view.ejs", {
+    title: `${data[0].inv_make} ${data[0].inv_model}`,
+    nav,
+    message: null,
+    data: data[0],
+  })
+}
+
 module.exports = invCont;

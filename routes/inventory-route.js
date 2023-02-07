@@ -4,5 +4,6 @@ const router = new express.Router();
 const invController = require("../controllers/invController");
 
 router.get("/type/:classificationId", invController.buildByClassification);
+router.get("/detail/:invId", invController.buildInvView);
 
 module.exports = router;
