@@ -7,12 +7,21 @@ require("dotenv").config()
  * when using remote DB connection (lines 11 - 13)
  * comment out for deployment
  ****************************/
+let pool;
+if (process.env.NODE_ENV === "development") {
+  pool = new Pool({
+    connectionString: process.env.DATABASE_URL,
+    ssl: {
+      rejectUnauthorized: false,
+    },
+  })
 
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  // ssl: {
-  //   rejectUnauthorized: process.env.NODE_ENV === "production"? true : false,
-  // },
-})
+}
+else {
+  pool = new Pool({
+    connectionString: process.env.DATABASE_URL,
+  })
+
+}
 
 module.exports = pool;
