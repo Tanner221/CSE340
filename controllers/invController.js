@@ -1,4 +1,5 @@
-const invModel = require("../models/inventory-model")
+const invModel = require("../models/inventory-model");
+const Util = require("../utilities");
 const utilities = require("../utilities")
 
 const invCont = {};
@@ -19,13 +20,14 @@ invCont.buildByClassification = async function (req, res, next) {
 
 invCont.buildInvView = async function (req, res, next) {
   const invId = req.params.invId;
-  let data = await invModel.getInventoryById(invId);
+  let data = await utilities.buildDetails(invId);
+  let titleInfo = await invModel.getInventoryById(invId);
   let nav = await utilities.getNav();
   res.render("./inventory/inventory-view.ejs", {
-    title: `${data[0].inv_make} ${data[0].inv_model}`,
+    title: `${titleInfo[0].inv_make} ${titleInfo[0].inv_model}`,
     nav,
     message: null,
-    data: data[0],
+    data: data,
   })
 }
 

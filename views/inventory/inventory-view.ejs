@@ -1,32 +1,4 @@
-<% if (title) { %>
-  <h1><%= title %></h1>
-<% } else { res.redirect('/') } %>
-
 <% if (message) { %>
   <p class="notice"><%= message %></p>
 <% } %>
-<div class="descGrid">
-  <% if (data) {%>
-    <img class='no-thumb' src="<%= data.inv_image -%>" alt='Image of <%=title%> on CSEmotors.com'/>
-    <div class='desc'>
-      <p>
-        <b>Description:</b>
-        <%=data.inv_description-%>
-      </p>
-      <p>
-        <b>Color:</b>
-        <%=data.inv_color-%>
-      </p>
-      <p>Miles: 
-        <%=data.inv_miles.toLocaleString('en-US')-%>
-      </p>
-      <%
-      const formatter = new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: 'USD',
-      }); 
-      %>
-      <h2 id='displayPrice'><b>Price:</b> <%=formatter.format(data.inv_price)%></h2>
-    </div>
-  <%} %>
-</div>
+<%- data %>

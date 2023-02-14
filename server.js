@@ -21,10 +21,12 @@ app.set("layout", "./layouts/layout") // not at views root
 /* ***********************
  * Routes
  *************************/
-app.use(require("./routes/static"))
+app.use(require("./routes/static"));
 app.get("/", baseController.buildHome);
 // Inventory routes
 app.use("/inv", require("./routes/inventory-route"));
+// Account Routes
+app.use("/account", require("./routes/account-route"));
 
 /* ***********************
  * Local Server Information
@@ -37,5 +39,5 @@ const host = process.env.HOST
  * Log statement to confirm server operation
  *************************/
 app.listen(port, () => {
-  console.log(`app listening on ${host}:${port}`)
+  console.log(`app listening on http://${host}:${port}`)
 })
