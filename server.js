@@ -25,8 +25,6 @@ app.use(require("./routes/static"));
 app.get("/", baseController.buildHome);
 // Inventory routes
 app.use("/inv", require("./routes/inventory-route"));
-// Account Routes
-app.use("/account", require("./routes/account-route"));
 
 /* ***********************
  * Local Server Information
