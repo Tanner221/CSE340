@@ -25,6 +25,8 @@ app.use(require("./routes/static"));
 app.get("/", baseController.buildHome);
 // Inventory routes
 app.use("/inv", require("./routes/inventory-route"));
+// Clinet routes
+app.use("/client", require("./routes/account-route"));
 
 /* ***********************
  * Local Server Information
