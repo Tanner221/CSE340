@@ -1,0 +1,25 @@
+<% if(title) {%>
+  <h1><%=title%></h1>
+<% } %>
+
+<% if(message) {%>
+  <p><%=message%></p>
+<% } %>
+
+<% if(errors) {%>
+  <p><%=errors%></p>
+<% } %>
+
+<p>All inputs are requried</p>
+<form action="/client/register" method="post">
+  <label for="firstName">First Name</label>
+  <input type="text" name="client_firstname" id="firstName">
+  <label for="lastName">Last Name</label>
+  <input type="text" name="client_lastname" id="lastName">
+  <label for="email">Email Address</label>
+  <input type="email" name="client_email" id="email">
+  <label for="password">Password</label>
+  <p>*Password should include at least 12 characters, 1 capital letter, 1 number and 1 special character </p>
+  <input type="password" name="client_password" id="password">
+  <input type="submit" value="Submit">
+</form>
