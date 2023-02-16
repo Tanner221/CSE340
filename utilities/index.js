@@ -67,4 +67,20 @@ Util.buildDetails = async function (req, res, next){
   let html = Util.buildInv(data[0]);
   return html;
 }
+
+/******************************
+ * Builds classification dropdown
+ *****************************/
+Util.buildClassificationDropdown = async function (){
+  const classificationQuery = await invModel.getClassifications();
+  const classifications = classificationQuery.rows;
+  // build html for select/option statement
+  let select = "<select name='classification_id' id='classification_id'><option>--Choose one--</option>"
+  classifications.forEach((classification) => {
+    select += `<option value='${classification.classification_id}'>${classification.classification_name}</option>`;
+  })
+  select += "</select>";
+  return select;
+}
+
 module.exports = Util;
