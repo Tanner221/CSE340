@@ -9,7 +9,13 @@ async function getVehiclesByClassificationId(classificationId){
     const data = await pool.query(`SELECT * FROM public.inventory 
     AS i JOIN public.classification AS c ON i.classification_id = 
     c.classification_id WHERE i.classification_id = $1`, [classificationId])
-    return data.rows;
+    if((data.rows.length) >= 1){
+      return data.rows;
+    } else{
+      const classification = await pool.query(`SELECT * FROM public.classification
+      WHERE classification_id = $1`, [classificationId]);
+      return classification.rows;
+    }
   } catch (error) {
     console.error('getclassificationbyid error' + error);
   }
