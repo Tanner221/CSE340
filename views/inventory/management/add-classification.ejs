@@ -5,8 +5,17 @@
 <% if (message) { %>
   <p class="notice"><%= message %></p>
 <% } %>
+
+<% if(errors) {%>
+  <ul class="notice">
+    <% errors.array().forEach(error => { %>
+      <li><%= error.msg %></li>
+   <%  }) %>
+  </ul>
+<% } %>
+
 <form action="/inv/addClassification" method="post">
   <label for="classificationName">Classification Name</label>
-  <input type="text" name="classificationName" id="classificationName">
+  <input type="text" name="classificationName" id="classificationName" value="<%= locals.classificationName %>">
   <input type="submit" value="Add Classification">
 </form>

@@ -44,7 +44,8 @@ invCont.buildClassificationView = async function (req, res, next) {
   res.render("./inventory/management/add-classification", {
     title: "Add Classification",
     nav,
-    message: null
+    message: null,
+    errors: null
   })
 }
 
@@ -55,15 +56,16 @@ invCont.buildVehicleView = async function (req, res, next) {
     title: "Add Vehicle",
     nav,
     message: null,
-    dropdown
+    dropdown,
+    errors: null
   })
 }
 
 invCont.addClassification = async function (req, res, next) {
-  const nav = await utilities.getNav()
   const { classificationName } = req.body;
   const response = invModel.addClassification(classificationName);
   if (response) {
+    const nav = await utilities.getNav()
     res.status(201).render("./inventory/management/inventory-management", {
       title: "Vehicle Management",
       nav,
