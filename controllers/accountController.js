@@ -1,5 +1,6 @@
 const utilities = require('../utilities')
 const accountModel = require('../models/account-model')
+const bcrypt = require("bcryptjs")
 /* ****************************************
 *  Deliver login view
 **************************************** */
@@ -9,6 +10,7 @@ async function buildLogin(req, res, next) {
     title: "Login",
     nav,
     message: null,
+    errors: null,
   })
 }
 
@@ -31,13 +33,25 @@ async function buildRegister(req, res, next) {
 async function registerClient(req, res, next) {
   let nav = await utilities.getNav();
   const { client_firstname, client_lastname, client_email, client_password } = req.body
+  let hashedPassword
+  try {
+    // pass regular password and cost (salt is generated automatically)
+    hashedPassword = await bcrypt.hashSync(client_password, 10)
+  } catch (error) {
+    res.status(500).render("clients/register", {
+      title: "Registration",
+      nav,
+      message: 'Sorry, there was an error processing the registration.',
+      errors: null,
+    })
+  }
   const regResult = await accountModel.registerClient(
     client_firstname,
     client_lastname,
     client_email,
-    client_password
+    hashedPassword
   )
-  console.log(regResult)
+  //console.log(regResult)
   if (regResult) {
     res.status(201).render("clients/login.ejs", {
       title: "Login",

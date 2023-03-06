@@ -14,11 +14,11 @@
   <label for="inv_year">Year</label>
   <input type="text" name="inv_year" id="inv_year">
   <label for="inv_description">Description</label>
-  <textarea name="inv_description" id="inv_description" cols="30" rows="5"></textarea>
+  <textarea name="inv_description" id="inv_description" cols="30" rows="5"><%= locals.client_lastname %></textarea>
   <label for="inv_image">Image Path</label>
   <input type="text" name="inv_image" id="inv_image" value="/images/vehicles/no-image.png">
   <label for="inv_thumbnail">Thumbnail Path</label>
-  <input type="text" name="inv_thumbnail" id="inv_thumbnail" value="/images/vehicles/no-image-tn.png">
+  <input type="text" name="inv_thumbnail" id="inv_thumbnail" value="/images/vehicles/no-image-tn.png" value="<%= locals.inv_thumbnail %>">
   <label for="inv_price">Price</label>
   <input type="number" name="inv_price" id="inv_price" min="0.00" max="1000000" step="any">
   <label for="inv_miles">Miles</label>
