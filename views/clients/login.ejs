@@ -16,9 +16,9 @@
 
 <form action="./login" method="POST">
   <label for="username">Username:</label>
-  <input type="email" name="username" id="username" required/>
+  <input type="email" name="client_email" id="username" required/>
   <label for="password">Password:</label>
-  <input type="text" name="password" id="password" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$" required>
+  <input type="password" name="client_password" id="password" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$" required>
   <input type="submit" name="submit" id="submit">
 </form>
 <p>No account? <a href="./register">Sign-up</a></p>

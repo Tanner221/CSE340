@@ -8,6 +8,8 @@ const regValidate = require('../utilities/account-validation')
 //Get route for the path that will be sent to my account
 router.get("/login", invController.buildLogin);
 router.get("/register", invController.buildRegister);
+//get to admin
+router.get("/", util.checkJWTToken, util.jwtAuth, invController.buildAdmin)
 router.post(
   "/register",
   regValidate.registationRules(),
@@ -15,9 +17,7 @@ router.post(
   invController.registerClient
 );
 router.post("/login",
-  (req, res) => {
-    res.status(200).send('login process')
-  }
+invController.loginClient
 )
 
 module.exports = router;

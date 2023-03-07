@@ -1,5 +1,7 @@
 const invModel = require("../models/inventory-model")
 const Util = {};
+const jwt = require("jsonwebtoken")
+require("dotenv").config()
 
 /*****************
  * Constructs the nav HTML unorderd list
@@ -10,13 +12,13 @@ Util.buildNav = function (data) {
   data.rows.forEach((row) => {
     list += "<li>";
     list += '<a class="nav-element" href="/inv/type/' +
-      row.classification_id + 
+      row.classification_id +
       '" title="see our inventory of ' +
       row.classification_name +
-      ' vehicles">' + 
+      ' vehicles">' +
       row.classification_name +
       "</a>";
-      list += "</li>";
+    list += "</li>";
   })
   list += "</ul>";
   return list;
@@ -32,11 +34,11 @@ Util.getNav = async function (req, res, next) {
   return nav;
 };
 
-Util.buildInv = function(data){
+Util.buildInv = function (data) {
   const formatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
-  }); 
+  });
   const miles = data.inv_miles.toLocaleString('en-US');
   const price = formatter.format(data.inv_price);
 
@@ -62,7 +64,7 @@ Util.buildInv = function(data){
   return html;
 }
 
-Util.buildDetails = async function (req, res, next){
+Util.buildDetails = async function (req, res, next) {
   let data = await invModel.getInventoryById(req);
   let html = Util.buildInv(data[0]);
   return html;
@@ -71,7 +73,7 @@ Util.buildDetails = async function (req, res, next){
 /******************************
  * Builds classification dropdown
  *****************************/
-Util.buildClassificationDropdown = async function (){
+Util.buildClassificationDropdown = async function () {
   const classificationQuery = await invModel.getClassifications();
   const classifications = classificationQuery.rows;
   // build html for select/option statement
@@ -81,6 +83,33 @@ Util.buildClassificationDropdown = async function (){
   })
   select += "</select>";
   return select;
+}
+
+/* ****************************************
+* Middleware to check token validity
+**************************************** */
+Util.checkJWTToken = (req, res, next) => {
+  jwt.verify(req.cookies.jwt, process.env.ACCESS_TOKEN_SECRET, function (err) {
+    if (err) {
+      return res.status(403).redirect("/client/login")
+    }
+    return next()
+  })
+}
+
+/* ****************************************
+ *  Authorize JWT Token
+ * ************************************ */
+Util.jwtAuth = (req, res, next) => {
+  const token = req.cookies.jwt
+  try {
+    const clientData = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET)
+    req.clientData = clientData
+    next()
+  } catch (error) {
+    res.clearCookie("jwt", { httpOnly: true })
+    return res.status(403).redirect("/")
+  }
 }
 
 module.exports = Util;
