@@ -11,6 +11,7 @@ const expressLayouts = require("express-ejs-layouts")
 const baseController = require("./controllers/baseController")
 const bodyParser = require("body-parser")
 const cookieParser = require("cookie-parser")
+const Util = require("./utilities")
 const app = express()
 
 /* ***********************
@@ -30,7 +31,7 @@ app.set("layout", "./layouts/layout") // not at views root
  * Routes
  *************************/
 app.use(require("./routes/static"));
-app.get("/", baseController.buildHome);
+app.get("/", Util.isLoggedIn, baseController.buildHome);
 // Inventory routes
 app.use("/inv", require("./routes/inventory-route"));
 // Account Routes

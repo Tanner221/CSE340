@@ -112,4 +112,22 @@ Util.jwtAuth = (req, res, next) => {
   }
 }
 
+Util.isLoggedIn = (req, res, next) => {
+  if(req.cookies.jwt){
+    try{
+      const token = req.cookies.jwt;
+      jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+      res.locals.isLoggedIn = true;
+    }
+    catch (error) {
+      res.clearCookie("jwt", { httpOnly: true})
+      res.locals.isLoggedIn = false;
+    }
+  }
+  else{
+    res.locals.isLoggedIn = false;
+  }
+  next();
+}
+
 module.exports = Util;

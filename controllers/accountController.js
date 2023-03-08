@@ -110,7 +110,13 @@ async function buildAdmin(req, res) {
     nav,
     message: null,
     errors: null,
+    clientData: req.clientData
   })
 }
 
-module.exports = { buildLogin, buildRegister, registerClient, loginClient, buildAdmin }
+async function logoutClient(req,res){
+  res.clearCookie("jwt");
+  res.status(200).redirect('/');
+}
+
+module.exports = { buildLogin, buildRegister, registerClient, loginClient, buildAdmin, logoutClient }
