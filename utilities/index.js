@@ -130,4 +130,11 @@ Util.isLoggedIn = (req, res, next) => {
   next();
 }
 
+Util.checkAdmin = (req, res, next) => {
+  if (req.clientData.client_type != "Employee" && req.clientData.client_type != "Admin"){
+    return res.status(403).redirect("/client/login");
+  }
+  next();
+}
+
 module.exports = Util;

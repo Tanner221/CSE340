@@ -6,4 +6,7 @@
   <p><%=message%></p>
 <% } %>
 
+<% if(clientData.client_type == "Client"){%>
+  <h1>Welcome <%=clientData.client_firstname%></h1>
+<% } %>
 <h2>You are logged in</h2>

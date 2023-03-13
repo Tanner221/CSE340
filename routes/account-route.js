@@ -2,25 +2,23 @@
 const express = require("express");
 const router = new express.Router();
 const util = require("../utilities");
-const invController = require("../controllers/accountController");
+const accountController = require("../controllers/accountController");
 const regValidate = require('../utilities/account-validation')
 
 //Get route for the path that will be sent to my account
-router.get("/login", util.isLoggedIn,invController.buildLogin);
-router.get("/logout", util.isLoggedIn,invController.logoutClient);
-router.get("/register", util.isLoggedIn,invController.buildRegister);
+router.get("/login", accountController.buildLogin);
+router.get("/logout", accountController.logoutClient);
+router.get("/register", accountController.buildRegister);
 //get to admin
-router.get("/", util.checkJWTToken, util.jwtAuth, util.isLoggedIn, invController.buildAdmin)
+router.get("/", util.checkJWTToken, util.jwtAuth, accountController.buildAdmin)
 router.post(
   "/register",
-  util.isLoggedIn,
   regValidate.registationRules(),
   regValidate.checkRegData,
-  invController.registerClient
+  accountController.registerClient
 );
 router.post("/login",
-util.isLoggedIn,
-invController.loginClient
+accountController.loginClient
 )
 
 module.exports = router;
