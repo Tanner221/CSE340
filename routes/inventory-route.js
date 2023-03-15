@@ -7,7 +7,7 @@ const VehicleValidate = require("../utilities/vehicle-validation")
 
 router.get("/type/:classificationId", invController.buildByClassification);
 router.get("/detail/:invId", invController.buildInvView);
-router.get("/manage",util.checkJWTToken, util.jwtAuth, util.checkAdmin, invController.buildManageView);
+router.get("/",util.checkJWTToken, util.jwtAuth, util.checkAdmin, invController.buildManageView);
 router.get("/addClassification", util.checkJWTToken, util.jwtAuth, util.checkAdmin, invController.buildClassificationView);
 router.get("/addVehicle", util.checkJWTToken, util.jwtAuth, util.checkAdmin, invController.buildVehicleView);
 
